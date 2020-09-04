@@ -1,0 +1,33 @@
+﻿@model RecipSuggestor.Models.IngList
+
+@{
+    ViewBag.Title = "ShowIng";
+}
+
+<h1>Ingredient List</h1>
+<h5>Pick the Ingredient from which you want to cook recipe</h5>
+<hr />
+
+@using (Html.BeginForm())
+{
+    int i = 0;
+    while (i < Model.IngrList.Count)
+    {
+        @Html.CheckBoxFor(m => Model.IngrList[i].isChecked)
+        @Model.IngrList[i].name
+        @Html.HiddenFor(m => Model.IngrList[i].id)
+        @Html.HiddenFor(m => Model.IngrList[i].type)
+
+        if(i > 0 && i % 3 == 0)
+        {
+            <br />
+        }
+        i++;
+
+    }
+    <br />
+    <center>
+    <input type="submit" value="Search" /></center>
+}
+
+

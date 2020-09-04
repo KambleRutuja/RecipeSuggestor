@@ -1,0 +1,78 @@
+﻿@model RecipSuggestor.ViewModel.RecipeViewModel
+
+@{
+    ViewBag.Title = "multidata";
+}
+
+@{
+    List<string> reciddd = new List<string>();
+}
+
+<h2>Ingredients</h2>
+<table>
+    <thead>
+        <tr>
+            <th>RId</th>
+            <th>IID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RecIngsss)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IngId)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@foreach (string iteming in (List<string>)ViewBag.sel)
+{
+    foreach (var item in Model.RecIngsss)
+    {
+        if (item.IngId == iteming && reciddd.Contains(iteming) != true)
+        {
+            reciddd.Add(item.RecId);
+        }
+    }
+}
+
+<table>
+    <tbody>
+        @foreach (var item in Model.Recipsss)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecLink)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!--
+<div>
+    @{ WebGrid obj1 = new WebGrid(source: Model.Ingresss, canPage: true, rowsPerPage: 20); }
+    @obj1.GetHtml();
+</div>
+
+<br />
+<br />
+<h2>Recipe Ingredients</h2>
+
+<div>
+    @{ WebGrid obj2 = new WebGrid(source: Model.RecIngsss, canPage: true, rowsPerPage: 20); }
+    @obj2.GetHtml();
+</div>
+-->

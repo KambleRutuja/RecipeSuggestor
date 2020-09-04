@@ -1,0 +1,64 @@
+﻿@model RecipSuggestor.ViewModel.RecipeViewModel
+
+@{
+    ViewBag.Title = "ShowRec";
+}
+
+<h1>RITab</h1>
+
+
+@{
+    List<int> reciddd = new List<int>();
+    List<string> ingiddd = new List<string>();
+    ingiddd.Add("31");
+    ingiddd.Add("20");
+    int id;
+    List<int> sling = (List<int>)Session["seling"];
+}
+
+<h2> selectd ing</h2>>
+@foreach(var item1 in sling)
+{
+    @item1
+    <br />
+}
+<br />
+
+<h1>itemid filtered</h1>
+@foreach (var iteming in ingiddd)
+{
+    int s1 = Int32.Parse(iteming);
+    foreach (var item in Model.RecIngsss)
+    {
+        int s2 = Int32.Parse(item.IngId);
+
+        if (s1 == s2)
+        {
+            @s1;
+            <br />
+            @item.RecId
+            <br />
+            id = Int32.Parse(item.RecId);
+            reciddd.Add(id);
+        }
+    }
+}
+
+@{
+    List<int> li = reciddd.Distinct().ToList();
+}
+<h1>recipe id</h1>
+<table>
+    <tbody>
+        @foreach (var newrecid in li)
+        {
+            <tr>
+                <td>
+                    @newrecid
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

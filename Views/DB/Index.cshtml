@@ -1,0 +1,61 @@
+﻿@model RecipSuggestor.ViewModel.RecipeViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    List<int> list = (List<int>)Session["Key"];
+    List<int> reciddd = new List<int>();
+    int id;
+}
+
+
+@foreach (int iteming in list)
+{
+    foreach (var item in Model.RecIngsss)
+    {
+        int s2 = Int32.Parse(item.IngId);
+
+        if (iteming == s2)
+        {      
+            id = Int32.Parse(item.RecId);
+            reciddd.Add(id);
+        }
+    }
+}
+
+@{ 
+    List<int> li = reciddd.Distinct().ToList();
+}
+
+<h1>recipe id</h1>
+<table>
+    <thead>
+        <tr>
+            <td>Recipe Id</td>
+            <td>Recipe Name</td>
+            <td>Recipe Link</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var newrecid in li)
+        {
+            foreach (var rec in Model.Recipsss)
+            {
+                int s2 = Int32.Parse(rec.RecId);
+
+                if (newrecid == s2)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m=> rec.RecId)</td>
+                        <td>@Html.DisplayFor(m => rec.RecName)</td>
+                        <td>@Html.DisplayFor(m => rec.RecLink)</td>
+                    </tr>
+                }
+            }
+        }
+
+    </tbody>
+</table>
+

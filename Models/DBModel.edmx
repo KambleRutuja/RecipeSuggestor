@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RecipesDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="IngredientTab">
+          <Key>
+            <PropertyRef Name="IngId" />
+          </Key>
+          <Property Name="IngId" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="IngName" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="IngType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RecipeTab">
+          <Key>
+            <PropertyRef Name="RecId" />
+          </Key>
+          <Property Name="RecId" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="RecName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecLink" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RITab">
+          <Key>
+            <PropertyRef Name="RIId" />
+          </Key>
+          <Property Name="RIId" Type="int" Nullable="false" />
+          <Property Name="RecId" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="IngId" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_R_I_Tab_IngredientTab">
+          <End Role="IngredientTab" Type="Self.IngredientTab" Multiplicity="1" />
+          <End Role="RITab" Type="Self.RITab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IngredientTab">
+              <PropertyRef Name="IngId" />
+            </Principal>
+            <Dependent Role="RITab">
+              <PropertyRef Name="IngId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_R_I_Tab_RecipeTab">
+          <End Role="RecipeTab" Type="Self.RecipeTab" Multiplicity="1" />
+          <End Role="RITab" Type="Self.RITab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTab">
+              <PropertyRef Name="RecId" />
+            </Principal>
+            <Dependent Role="RITab">
+              <PropertyRef Name="RecId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RecipesDBModelStoreContainer">
+          <EntitySet Name="IngredientTab" EntityType="Self.IngredientTab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RecipeTab" EntityType="Self.RecipeTab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RITab" EntityType="Self.RITab" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_R_I_Tab_IngredientTab" Association="Self.FK_R_I_Tab_IngredientTab">
+            <End Role="IngredientTab" EntitySet="IngredientTab" />
+            <End Role="RITab" EntitySet="RITab" />
+          </AssociationSet>
+          <AssociationSet Name="FK_R_I_Tab_RecipeTab" Association="Self.FK_R_I_Tab_RecipeTab">
+            <End Role="RecipeTab" EntitySet="RecipeTab" />
+            <End Role="RITab" EntitySet="RITab" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RecipesDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="IngredientTab">
+          <Key>
+            <PropertyRef Name="IngId" />
+          </Key>
+          <Property Name="IngId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="IngName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IngType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RITabs" Relationship="Self.FK_R_I_Tab_IngredientTab" FromRole="IngredientTab" ToRole="RITab" />
+        </EntityType>
+        <EntityType Name="RecipeTab">
+          <Key>
+            <PropertyRef Name="RecId" />
+          </Key>
+          <Property Name="RecId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="RecName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RecLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RITabs" Relationship="Self.FK_R_I_Tab_RecipeTab" FromRole="RecipeTab" ToRole="RITab" />
+        </EntityType>
+        <EntityType Name="RITab">
+          <Key>
+            <PropertyRef Name="RIId" />
+          </Key>
+          <Property Name="RIId" Type="Int32" Nullable="false" />
+          <Property Name="RecId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="IngId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="IngredientTab" Relationship="Self.FK_R_I_Tab_IngredientTab" FromRole="RITab" ToRole="IngredientTab" />
+          <NavigationProperty Name="RecipeTab" Relationship="Self.FK_R_I_Tab_RecipeTab" FromRole="RITab" ToRole="RecipeTab" />
+        </EntityType>
+        <Association Name="FK_R_I_Tab_IngredientTab">
+          <End Role="IngredientTab" Type="Self.IngredientTab" Multiplicity="1" />
+          <End Role="RITab" Type="Self.RITab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IngredientTab">
+              <PropertyRef Name="IngId" />
+            </Principal>
+            <Dependent Role="RITab">
+              <PropertyRef Name="IngId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_R_I_Tab_RecipeTab">
+          <End Role="RecipeTab" Type="Self.RecipeTab" Multiplicity="1" />
+          <End Role="RITab" Type="Self.RITab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTab">
+              <PropertyRef Name="RecId" />
+            </Principal>
+            <Dependent Role="RITab">
+              <PropertyRef Name="RecId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RecipesDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="IngredientTabs" EntityType="Self.IngredientTab" />
+          <EntitySet Name="RecipeTabs" EntityType="Self.RecipeTab" />
+          <EntitySet Name="RITabs" EntityType="Self.RITab" />
+          <AssociationSet Name="FK_R_I_Tab_IngredientTab" Association="Self.FK_R_I_Tab_IngredientTab">
+            <End Role="IngredientTab" EntitySet="IngredientTabs" />
+            <End Role="RITab" EntitySet="RITabs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_R_I_Tab_RecipeTab" Association="Self.FK_R_I_Tab_RecipeTab">
+            <End Role="RecipeTab" EntitySet="RecipeTabs" />
+            <End Role="RITab" EntitySet="RITabs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RecipesDBModelStoreContainer" CdmEntityContainer="RecipesDBEntities">
+          <EntitySetMapping Name="IngredientTabs">
+            <EntityTypeMapping TypeName="RecipesDBModel.IngredientTab">
+              <MappingFragment StoreEntitySet="IngredientTab">
+                <ScalarProperty Name="IngId" ColumnName="IngId" />
+                <ScalarProperty Name="IngName" ColumnName="IngName" />
+                <ScalarProperty Name="IngType" ColumnName="IngType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecipeTabs">
+            <EntityTypeMapping TypeName="RecipesDBModel.RecipeTab">
+              <MappingFragment StoreEntitySet="RecipeTab">
+                <ScalarProperty Name="RecId" ColumnName="RecId" />
+                <ScalarProperty Name="RecName" ColumnName="RecName" />
+                <ScalarProperty Name="RecLink" ColumnName="RecLink" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RITabs">
+            <EntityTypeMapping TypeName="RecipesDBModel.RITab">
+              <MappingFragment StoreEntitySet="RITab">
+                <ScalarProperty Name="RIId" ColumnName="RIId" />
+                <ScalarProperty Name="RecId" ColumnName="RecId" />
+                <ScalarProperty Name="IngId" ColumnName="IngId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
