@@ -4,12 +4,29 @@
     ViewBag.Title = "Index";
 }
 
+<h2> selected Ingredients</h2>
+
 @{
     List<int> list = (List<int>)Session["Key"];
     List<int> reciddd = new List<int>();
     int id;
 }
 
+<ul>
+@foreach (var item1 in list)
+{
+    foreach (var intems in Model.Ingresss)
+    {
+        int s3 = Int32.Parse(intems.IngId);
+
+        if (item1 == s3)
+        {
+            <li> @Html.DisplayFor(m => intems.IngName) </li>          
+
+        }
+    }
+}
+    </ul>
 
 @foreach (int iteming in list)
 {
@@ -18,24 +35,23 @@
         int s2 = Int32.Parse(item.IngId);
 
         if (iteming == s2)
-        {      
+        {
             id = Int32.Parse(item.RecId);
             reciddd.Add(id);
         }
     }
 }
 
-@{ 
+@{
     List<int> li = reciddd.Distinct().ToList();
+    string link;
 }
 
-<h1>recipe id</h1>
-<table>
+<h1>Suggestrd Recipes</h1>
+<table border="1">
     <thead>
         <tr>
-            <td>Recipe Id</td>
-            <td>Recipe Name</td>
-            <td>Recipe Link</td>
+            <td><h4>Recipe Name</h4></td>
         </tr>
     </thead>
     <tbody>
@@ -44,13 +60,18 @@
             foreach (var rec in Model.Recipsss)
             {
                 int s2 = Int32.Parse(rec.RecId);
+                link = rec.RecLink.ToString();
 
                 if (newrecid == s2)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(m=> rec.RecId)</td>
-                        <td>@Html.DisplayFor(m => rec.RecName)</td>
-                        <td>@Html.DisplayFor(m => rec.RecLink)</td>
+                        <td><b> @Html.DisplayFor(m => rec.RecName) </b></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <iframe width="600" height="315" src=@link frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                            </iframe>
+                        </td>
                     </tr>
                 }
             }

@@ -293,8 +293,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\ShowIng.cshtml" />
     <Content Include="Views\Home\multidata.cshtml" />
-    <Content Include="Views\Home\ShowRec.cshtml" />
-    <Content Include="Views\DB\ShowRec.cshtml" />
     <Content Include="Views\DB\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
